@@ -3,7 +3,7 @@
 #This script is intended to bootstrap kubectl and allow for selection of target pods in a sane way. 
 echo "By default, this utility will use the kubeconfig at the location '~/.kube/config'. You can specify an alternative configuration by passing it as an argument for this script."
 echo "To exit use control+c for now"
-wait 3
+sleep 3
 echo "Using kubeconfig:"
 
 #Default to standard kubeconfig path if no config file is specified at runtime
