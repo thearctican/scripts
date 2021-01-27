@@ -10,7 +10,7 @@ kubeconfigpath="${1:-~/.kube/config}"
 #Confirm that the path read from 'read' is correct
 echo $kubeconfigpath
 
-#call the specified path to the config to get pods and filter for polaris pods.
+#call the specified path to the config to get running pods.
 podlist=`kubectl --kubeconfig "$kubeconfigpath" get pods --field-selector status.phase=Running -o custom-columns=":metadata.name"`
 echo $podlist
 
