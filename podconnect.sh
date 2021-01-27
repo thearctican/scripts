@@ -20,7 +20,7 @@ if [ `grep -q namespace $kubeconfigpath; echo $?` = 0 ]; then
 	select pod in $podlist
 		do
     		echo You have selected $pod
-			kubectl --kubeconfig $kubeconfigpath exec -it $pod -- /bin/bash
+			kubectl --kubeconfig $kubeconfigpath exec -it $pod -- /bin/bash ; exit
 		done
 	else
 		
@@ -31,7 +31,7 @@ if [ `grep -q namespace $kubeconfigpath; echo $?` = 0 ]; then
 					select pod in $nspod
 						do
 							echo You have selected $pod in $namespace
-							kubectl --kubeconfig "$kubeconfigpath" --namespace $namespace exec -it $pod -- /bin/bash
+							kubectl --kubeconfig "$kubeconfigpath" --namespace $namespace exec -it $pod -- /bin/bash ; exit
 						done
 				done
 fi
