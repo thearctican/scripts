@@ -2,7 +2,6 @@
 
 #This script is intended to bootstrap kubectl and allow for selection of target pods in a sane way. 
 echo "By default, this utility will use the kubeconfig at the location '~/.kube/config'. You can specify an alternative configuration by passing it as an argument for this script."
-echo "To exit use control+c for now"
 sleep 3
 echo "Using kubeconfig:"
 
@@ -16,11 +15,9 @@ echo $kubeconfigpath
 podlist=`kubectl --kubeconfig "$kubeconfigpath" get pods --field-selector status.phase=Running -o custom-columns=":metadata.name"`
 nslist=`kubectl --kubeconfig "$kubeconfigpath" get namespaces -o custom-columns=":metadata.name"`
 
-#Select target pod and initiate a shell prompt - needs better logic to return to first level if needed, and exit gracefully as an option. 
-#For now, press control+c when done. 
-
-if [`grep -q namespace $kubeconfigpath; echo $1` -eq 1]; then	
-	select pod in [$podlist break]
+#Select target pod and initiate a shell prompt
+if [ `grep -q namespace $kubeconfigpath; echo $?` = 0 ]; then	
+	select pod in $podlist
 		do
     		echo You have selected $pod
 			kubectl --kubeconfig $kubeconfigpath exec -it $pod -- /bin/bash
