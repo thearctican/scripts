@@ -1,6 +1,8 @@
 #!/bin/bash
 
-#This script is intended to bootstrap kubectl and allow for selection of target pods in a sane way. 
+#This script is intended to bootstrap kubectl and allow for selection of a pod on which to pop a shell.
+#This will no longer be maintained.
+
 echo "By default, this utility will use the kubeconfig at in your account's default location. You can specify an alternative configuration by passing the file path as an argument for this script."
 sleep 3
 echo "Using kubeconfig:"
@@ -16,7 +18,7 @@ echo $kubeconfigpath
 podlist=`kubectl --kubeconfig "$kubeconfigpath" get pods --field-selector status.phase=Running -o custom-columns=":metadata.name"`
 
 
-#Select target pod and initiate a shell prompt
+#Select target pod and initiate a shell prompt on the default container
 if [ `grep -q namespace $kubeconfigpath; echo $?` = 0 ]; then	
 	select pod in $podlist
 		do
